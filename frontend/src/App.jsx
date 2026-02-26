@@ -37,16 +37,28 @@ export default function App() {
   };
 
   const handleAnalyze = async (article) => {
-    setLoading(true);
-    setError(null);
-
     try {
-      await analyzeArticle(article);
-      await loadAnalyses();
+      const payload = {
+        title: article.title,
+        url: article.url,
+        source: article.source?.name || "Unknown",
+        publishedAt: article.publishedAt,
+        description: article.description || article.content || ""
+      };
+
+      const response = await analyzeArticle(payload);
+      console.log("ANALYZE RESPONSE:", response);
+      setAnalyses(prev => [response.data, ...prev]);
+
+      // Scroll smoothly to results
+    setTimeout(() => {
+      document
+        .getElementById("analysis-section")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 10);
     } catch (err) {
+      console.error("ANALYZE ERROR:", err.response?.data || err.message);
       setError("Failed to analyze article");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -104,7 +116,7 @@ export default function App() {
             </div>
           ))}
         </div>
-
+        <div id="analysis-section">
         {/* Stored Analyses */}
         <h2 className="text-2xl font-semibold mb-4">
           Analyzed Articles
@@ -127,6 +139,7 @@ export default function App() {
               </p>
             </div>
           ))}
+        </div>
         </div>
 
       </div>
