@@ -77,6 +77,11 @@ export default function App() {
             placeholder="Search news..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
           <button
             onClick={handleSearch}
@@ -96,6 +101,11 @@ export default function App() {
 
         {/* News Results */}
         <div className="grid gap-4 mb-8">
+          {!loading && articles.length === 0 && query && (
+            <div className="text-gray-500">
+              No articles found.
+            </div>
+          )}
           {articles.map((article) => (
             <div
               key={article.id}
