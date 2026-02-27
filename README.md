@@ -170,8 +170,8 @@ http://localhost:5173
 
 If more time were available, potential improvements would include:
 
--  
-- Pagination for analyzed articles
+- Enforce database-level and frontend level uniqueness for fully idempotent analysis endpoint 
+    (avoid re-analysing the same article)
 - Deployment to a free-tier hosting provider
 - Automated testing
 - Environment-based configuration for production

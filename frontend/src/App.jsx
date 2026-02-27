@@ -51,11 +51,11 @@ export default function App() {
       setAnalyses(prev => [response.data, ...prev]);
 
       // Scroll smoothly to results
-    setTimeout(() => {
-      document
-        .getElementById("analysis-section")
-        ?.scrollIntoView({ behavior: "smooth" });
-    }, 10);
+      setTimeout(() => {
+        document
+          .getElementById("analysis-section")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 10);
     } catch (err) {
       console.error("ANALYZE ERROR:", err.response?.data || err.message);
       setError("Failed to analyze article");
